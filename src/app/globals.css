@@ -17,15 +17,5 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.coin-pile {
-  background-color: #ffd700; /* Or couleur de pile */
-  content: "Pile";
-}
-
-.coin-face {
-  background-color: #c0c0c0; /* Or couleur de face */
-  content: "Face";
+  font-family: var(--font-pixelify-sans);
 }
