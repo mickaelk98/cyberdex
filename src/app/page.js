@@ -129,8 +129,8 @@ export default function Home() {
           {(player1Choice || player2Choice) && (
             <>
               {selectedPlayer === player1
-                ? <p className="text-center">{selectedPlayer} chose {player1Choice}, you can flip the coin</p>
-                : <p className="text-center">{selectedPlayer} chose {player2Choice}, you can flip the coin</p>}
+                ? <p className="text-center text-xl">{selectedPlayer} chose {player1Choice}, you can flip the coin</p>
+                : <p className="text-center text-xl">{selectedPlayer} chose {player2Choice}, you can flip the coin</p>}
             </>
           )}
 
@@ -145,7 +145,7 @@ export default function Home() {
 
         <div className="">
           <div className="flex flex-col items-center justify-center h-full">
-            <h1 className="text-3xl font-bold mb-6">Coin Toss</h1>
+            <h1 className="text-5xl font-bold mb-6">Coin Toss</h1>
 
             <div
               ref={coinRef}
