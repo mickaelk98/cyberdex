@@ -100,7 +100,7 @@ export default function Home() {
               value={player2}
               onChange={(e) => setPlayer2(e.target.value)}
             />
-            <button className="bg-blue-500 w-1/2 self-end text-white p-1 rounded-md ">Entrez</button>
+            <button className="bg-blue-500 w-1/2 self-end text-white p-1 rounded-md ">Commencez</button>
           </form>
 
           {/* Informations affichées si les joueurs ont entré leur nom */}
@@ -126,10 +126,18 @@ export default function Home() {
             <ul className="mt-4 flex flex-col items-center justify-center">
               <p className="text-xl">{selectedPlayer} choisit entre pile ou face</p>
               <div className="flex gap-2">
-                <Image src="/pile.png" alt="pile" width={150} height={150} onClick={() => playerChoice("pile")} />
-                <Image src="/face.png" alt="face" width={150} height={150} onClick={() => playerChoice("face")} />
+                <Image className="cursor-pointer" src="/pile.png" alt="pile" width={150} height={150} onClick={() => playerChoice("pile")} />
+                <Image className="cursor-pointer" src="/face.png" alt="face" width={150} height={150} onClick={() => playerChoice("face")} />
               </div>
             </ul>
+          )}
+
+          {(player1Choice || player2Choice) && (
+            <>
+              {selectedPlayer === player1
+                ? <p className="text-center">{selectedPlayer} a choisit {player1Choice}, vous pouvez lancé la pièce</p>
+                : <p className="text-center">{selectedPlayer} a choisit {player2Choice}, vous pouvez lancé la pièce</p>}
+            </>
           )}
 
           {/* Resultat */}
@@ -174,10 +182,10 @@ export default function Home() {
 
             <button
               onClick={flipCoin}
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-              disabled={isFlipping}
+              className={`bg-blue-500 text-white px-4 py-2 rounded ${isFlipping || player1Choice === "" || player2Choice === "" ? "opacity-50" : ""}`}
+              disabled={isFlipping || player1Choice === "" || player2Choice === ""}
             >
-              {isFlipping ? "Lancer en cours..." : "Lancer la pièce"}
+              {isFlipping ? "Lancer en cours..." : "Lancer la pièce !"}
             </button>
           </div>
         </div>
