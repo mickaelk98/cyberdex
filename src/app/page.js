@@ -3,9 +3,6 @@
 
 import { useState, useRef } from "react";
 import { gsap } from "gsap";
-
-import CoinFlip from "./components/CoinFlip";
-import Header from "./components/Hedaer";
 import Image from "next/image";
 
 export default function Home() {
