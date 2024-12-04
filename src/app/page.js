@@ -1,101 +1,187 @@
+"use client";
+
+
+import { useState, useRef } from "react";
+import { gsap } from "gsap";
+
+import CoinFlip from "./components/CoinFlip";
+import Header from "./components/Hedaer";
 import Image from "next/image";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [player1, setPlayer1] = useState("");
+  const [player2, setPlayer2] = useState("");
+  const [showPlayer, setShowplayer] = useState(false);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [player1Choice, setPlayer1Choice] = useState("");
+  const [player2Choice, setPlayer2Choice] = useState("");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  // coin
+  const [result, setResult] = useState("pile");
+  const [showResult, setShowResult] = useState(false);
+  const [isFlipping, setIsFlipping] = useState(false);
+  const coinRef = useRef(null);
+
+  // Chemins des images
+  const pileImage = "/pile.png";
+  const faceImage = "/face.png";
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(player1, player2);
+    const randomName = Math.random() > 0.5 ? player1 : player2;
+    setSelectedPlayer(randomName);
+    setShowplayer(true);
+  }
+
+  function playerChoice(choice) {
+    if (selectedPlayer === player1) {
+      if (choice === "pile") {
+        setPlayer1Choice("pile");
+        setPlayer2Choice("face");
+      } else {
+        setPlayer1Choice("face");
+        setPlayer2Choice("pile");
+      }
+    } else {
+      if (choice === "pile") {
+        setPlayer2Choice("pile");
+        setPlayer1Choice("face");
+      } else {
+        setPlayer2Choice("face");
+        setPlayer1Choice("pile");
+      }
+    }
+  }
+
+  const flipCoin = () => {
+    if (isFlipping) return;
+    setIsFlipping(true);
+    setShowResult(true);
+
+    // Animation GSAP pour le lancer de pièce
+    gsap.fromTo(
+      coinRef.current,
+      { rotateY: 0 },
+      {
+        rotateY: 3600,
+        duration: 2,
+        ease: "power4.out",
+        onComplete: () => {
+          // Déterminer le résultat après le lancer
+          const outcome = Math.random() > 0.5 ? "pile" : "face";
+          setResult(outcome);
+          setIsFlipping(false);
+        },
+      }
+    );
+  };
+
+  return (
+    <div className="h-screen flex flex-col bg-[#020B1A]">
+      <header className="text-white  max-w-7xl mx-auto py-5 h-[150px]">
+        <Image src="/cyberdex.png" alt="Logo" width={150} height={150} />
+      </header>
+      <main className="flex-1 flex items-start justify-evenly w-full max-w-7xl mx-auto">
+        <aside className="text-white w-96 p-2">
+          <form onSubmit={handleSubmit} action="" className="max-w-96 text-white flex flex-col gap-4 mt-4">
+
+            <input
+              className="p-1 text-slate-500 rounded-md"
+              placeholder="Joueur 1"
+              type="text"
+              value={player1}
+              onChange={(e) => setPlayer1(e.target.value)}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <input
+              className="p-1 text-slate-500 rounded-md"
+              placeholder="Joueur 2"
+              type="text"
+              value={player2}
+              onChange={(e) => setPlayer2(e.target.value)}
+            />
+            <button className="bg-blue-500 w-1/2 self-end text-white p-1 rounded-md ">Entrez</button>
+          </form>
+
+          {/* Informations affichées si les joueurs ont entré leur nom */}
+          {showPlayer && (
+            <ul className="flex gap-2 mt-8 items-center justify-between">
+              <li className="w-1/2">
+                <div className="flex flex-col bg-white rounded-md">
+                  <h2 className="test-center bg-blue-500 p-1 rounded-tl-md rounded-tr-md text-center">Joueur 1</h2>
+                  <small className="text-center text-xl text-slate-500 py-2">{player1}</small>
+                </div>
+              </li>
+              <li className="w-1/2">
+                <div className="flex flex-col bg-white rounded-md">
+                  <h2 className="test-center bg-blue-500 p-1 rounded-tl-md rounded-tr-md text-center">Joueur 2</h2>
+                  <small className="text-center text-xl text-slate-500 py-2">{player2}</small>
+                </div>
+              </li>
+            </ul>
+          )}
+
+          {/* Choix entre Pile ou Face */}
+          {selectedPlayer && (
+            <ul className="mt-4 flex flex-col items-center justify-center">
+              <p className="text-xl">{selectedPlayer} choisit entre pile ou face</p>
+              <div className="flex gap-2">
+                <Image src="/pile.png" alt="pile" width={150} height={150} onClick={() => playerChoice("pile")} />
+                <Image src="/face.png" alt="face" width={150} height={150} onClick={() => playerChoice("face")} />
+              </div>
+            </ul>
+          )}
+
+          {/* Resultat */}
+          {showResult && isFlipping === false && <div className="flex items-center justify-evenly">
+            <h3>Resultat : </h3>
+            <div className="flex gap-2 flex-col items-center justify-center">
+              <Image src={result === "pile" ? "/pile.png" : "/face.png"} alt="pile" width={150} height={150} />
+              <p>{result === "pile" ? "Pile" : "Face"}</p>
+            </div>
+          </div>}
+        </aside>
+
+        {/* CoinFlip occupe tout l'espace restant */}
+        <div className="">
+          <div className="flex flex-col items-center justify-center h-full">
+            <h1 className="text-3xl font-bold mb-6">Lancer de Pièce</h1>
+
+            <div
+              ref={coinRef}
+              className="w-32 h-32 bg- rounded-full flex items-center justify-center mb-6 relative"
+            >
+              {result === "pile" && (
+                <Image
+                  src={pileImage}
+                  width={400}
+                  height={400}
+                  alt="Pile"
+                  className="w-full h-full object-cover"
+                />
+              )}
+              {result === "face" && (
+                <Image
+                  src={faceImage}
+                  width={400}
+                  height={400}
+                  alt="Face"
+                  className="w-full h-full object-cover"
+                />
+              )}
+              {!result && <span className="text-xl font-bold">?</span>}
+            </div>
+
+            <button
+              onClick={flipCoin}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+              disabled={isFlipping}
+            >
+              {isFlipping ? "Lancer en cours..." : "Lancer la pièce"}
+            </button>
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
