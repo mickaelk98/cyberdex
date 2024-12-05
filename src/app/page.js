@@ -121,7 +121,7 @@ export default function Home() {
             </>
           )}
         </aside>
-        <div className="flex flex-col items-start gap-4 md:self-start">
+        <div className="flex flex-col items-start justify-center item-center gap-4">
           <div className="flex flex-col items-center justify-center h-full">
             <h1 className="text-5xl font-bold mb-6">Coin Toss</h1>
             <div
@@ -156,7 +156,7 @@ export default function Home() {
               {isFlipping ? "Flipping..." : "Flip the coin!"}
             </button>
           </div>
-          {showResult && isFlipping === false && <div className="flex items-center justify-evenly">
+          {showResult && isFlipping === false && <div className="flex flex-col items-center justify-center w-full">
             <h3>Result:</h3>
             <div className="flex gap-2 flex-col items-center justify-center">
               <Image src={result === "tails" ? "/tails.png" : "/heads.png"} alt="heads" width={150} height={150} />
