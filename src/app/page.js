@@ -126,13 +126,13 @@ export default function Home() {
             <h1 className="text-5xl font-bold mb-6">Coin Toss</h1>
             <div
               ref={coinRef}
-              className="w-32 h-32 bg- rounded-full flex items-center justify-center mb-6 relative"
+              className="w-[150px] h-[150px] bg- rounded-full flex items-center justify-center mb-6 relative"
             >
               {result === "tails" && (
                 <Image
                   src={tailsImage}
-                  width={400}
-                  height={400}
+                  width={150}
+                  height={150}
                   alt="Heads"
                   className="w-full h-full object-cover"
                 />
@@ -140,8 +140,8 @@ export default function Home() {
               {result === "heads" && (
                 <Image
                   src={headsImage}
-                  width={400}
-                  height={400}
+                  width={150}
+                  height={150}
                   alt="Tails"
                   className="w-full h-full object-cover"
                 />
