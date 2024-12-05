@@ -121,7 +121,7 @@ export default function Home() {
             </>
           )}
         </aside>
-        <div className="flex flex-col items-start justify-center item-center gap-4">
+        <div className="flex flex-col items-start justify-center gap-4 md:self-start">
           <div className="flex flex-col items-center justify-center h-full">
             <h1 className="text-5xl font-bold mb-6">Coin Toss</h1>
             <div
