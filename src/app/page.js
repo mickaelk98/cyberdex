@@ -75,8 +75,8 @@ export default function Home() {
 
   return (
     <div className="h-screen flex flex-col bg-[#020B1A]">
-      <header className="text-white  max-w-7xl mx-auto py-5 h-[150px]">
-        <Image src="/cyberdex.png" alt="Logo" width={150} height={150} />
+      <header className="text-white  max-w-7xl mx-auto py-5 mb-5">
+        <Image src="/cyberdex.png" alt="Logo" width={300} height={300} />
       </header>
       <main className="flex-1 flex items-start justify-evenly w-full max-w-7xl mx-auto">
         <aside className="text-white w-96 p-2">
@@ -133,17 +133,9 @@ export default function Home() {
                 : <p className="text-center text-xl">{selectedPlayer} chose {player2Choice}, you can flip the coin</p>}
             </>
           )}
-
-          {showResult && isFlipping === false && <div className="flex items-center justify-evenly">
-            <h3>Result:</h3>
-            <div className="flex gap-2 flex-col items-center justify-center">
-              <Image src={result === "tails" ? "/tails.png" : "/heads.png"} alt="heads" width={150} height={150} />
-              <p>{result === "tails" ? "Heads" : "Tails"}</p>
-            </div>
-          </div>}
         </aside>
 
-        <div className="">
+        <div className="flex flex-col items-center gap-4">
           <div className="flex flex-col items-center justify-center h-full">
             <h1 className="text-5xl font-bold mb-6">Coin Toss</h1>
 
@@ -180,6 +172,13 @@ export default function Home() {
               {isFlipping ? "Flipping..." : "Flip the coin!"}
             </button>
           </div>
+          {showResult && isFlipping === false && <div className="flex items-center justify-evenly">
+            <h3>Result:</h3>
+            <div className="flex gap-2 flex-col items-center justify-center">
+              <Image src={result === "tails" ? "/tails.png" : "/heads.png"} alt="heads" width={150} height={150} />
+              <p>{result === "tails" ? "Heads" : "Tails"}</p>
+            </div>
+          </div>}
         </div>
       </main>
     </div>
