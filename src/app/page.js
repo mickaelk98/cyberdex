@@ -1,9 +1,7 @@
 "use client";
-
 import { useState, useRef } from "react";
 import { gsap } from "gsap";
 import Image from "next/image";
-
 export default function Home() {
   const [player1, setPlayer1] = useState("");
   const [player2, setPlayer2] = useState("");
@@ -11,17 +9,14 @@ export default function Home() {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [player1Choice, setPlayer1Choice] = useState("");
   const [player2Choice, setPlayer2Choice] = useState("");
-
   // coin
   const [result, setResult] = useState("tails");
   const [showResult, setShowResult] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
   const coinRef = useRef(null);
-
   // Chemins des images
   const tailsImage = "/tails.png";
   const headsImage = "/heads.png";
-
   function handleSubmit(e) {
     e.preventDefault();
     console.log(player1, player2);
@@ -29,7 +24,6 @@ export default function Home() {
     setSelectedPlayer(randomName);
     setShowplayer(true);
   }
-
   function playerChoice(choice) {
     if (selectedPlayer === player1) {
       if (choice === "tails") {
@@ -49,12 +43,10 @@ export default function Home() {
       }
     }
   }
-
   const flipCoin = () => {
     if (isFlipping) return;
     setIsFlipping(true);
     setShowResult(true);
-
     // Animation GSAP pour le lancer de pièce
     gsap.fromTo(
       coinRef.current,
@@ -72,16 +64,14 @@ export default function Home() {
       }
     );
   };
-
   return (
     <div className="h-screen flex flex-col bg-[#020B1A]">
       <header className="text-white  max-w-7xl mx-auto py-5 mb-5">
         <Image src="/cyberdex.png" alt="Logo" width={300} height={300} />
       </header>
-      <main className="flex-1 flex items-start justify-evenly w-full max-w-7xl mx-auto">
-        <aside className="text-white w-96 p-2">
-          <form onSubmit={handleSubmit} action="" className="max-w-96 text-white flex flex-col gap-4 mt-4">
-
+      <main className="flex-1 flex flex-col-reverse items-center justify-end w-full max-w-7xl md:flex-row md:justify-evenly">
+        <aside className="text-white w-full p-2 flex flex-col items-center justify-center md:w-1/2 md:self-start">
+          <form onSubmit={handleSubmit} action="" className=" w-80 max-w-96 text-white flex flex-col gap-4 mt-4">
             <input
               className="p-1 text-slate-500 rounded-md"
               placeholder="Player 1"
@@ -96,11 +86,10 @@ export default function Home() {
               value={player2}
               onChange={(e) => setPlayer2(e.target.value)}
             />
-            <button className="bg-blue-500 w-1/2 self-end text-white p-1 rounded-md ">Start</button>
+            <button className="bg-blue-500 w-1/2 mx-auto text-white p-1 rounded-md ">Start</button>
           </form>
-
           {showPlayer && (
-            <ul className="flex gap-2 mt-8 items-center justify-between">
+            <ul className="flex gap-2 mt-8 w-80 max-w-96 items-center justify-between">
               <li className="w-1/2">
                 <div className="flex flex-col bg-white rounded-md">
                   <h2 className="test-center bg-blue-500 p-1 rounded-tl-md rounded-tr-md text-center">Player 1</h2>
@@ -115,7 +104,6 @@ export default function Home() {
               </li>
             </ul>
           )}
-
           {selectedPlayer && (
             <ul className="mt-4 flex flex-col items-center justify-center">
               <p className="text-xl">{selectedPlayer} chooses between heads or tails</p>
@@ -125,7 +113,6 @@ export default function Home() {
               </div>
             </ul>
           )}
-
           {(player1Choice || player2Choice) && (
             <>
               {selectedPlayer === player1
@@ -134,11 +121,9 @@ export default function Home() {
             </>
           )}
         </aside>
-
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-start gap-4 md:self-start">
           <div className="flex flex-col items-center justify-center h-full">
             <h1 className="text-5xl font-bold mb-6">Coin Toss</h1>
-
             <div
               ref={coinRef}
               className="w-32 h-32 bg- rounded-full flex items-center justify-center mb-6 relative"
@@ -163,7 +148,6 @@ export default function Home() {
               )}
               {!result && <span className="text-xl font-bold">?</span>}
             </div>
-
             <button
               onClick={flipCoin}
               className={`bg-blue-500 text-white px-4 py-2 rounded ${isFlipping || player1Choice === "" || player2Choice === "" ? "opacity-50" : ""}`}
