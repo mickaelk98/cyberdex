@@ -123,7 +123,7 @@ export default function Home() {
         </aside>
         <div className="flex flex-col items-start justify-center gap-4 md:self-start">
           <div className="flex flex-col items-center justify-center h-full">
-            <h1 className="text-5xl font-bold mb-6 z-10">Coin Toss</h1>
+            <h1 className="text-5xl text-white font-bold mb-6 z-10">Coin Toss</h1>
             <div
               ref={coinRef}
               className="w-[150px] h-[150px] bg- rounded-full flex items-center justify-center mb-6 relative"
